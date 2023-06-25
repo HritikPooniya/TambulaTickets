@@ -15,9 +15,9 @@ router.post('/register',async (req,res)=>{
     const Registered = await User.register(newUser,req.body.password);
     req.logIn(Registered,(err)=>{
         if(err){
-            console.log("error while login");
+            console.log("error, please enter valid mail id or you are already registered with this mailid");
         }
-        console.log("you are registered");
+        console.log("Successfully register");
         res.redirect('/');
     })
     
@@ -27,7 +27,7 @@ router.get('/login', (req,res) => {
 });
 
 router.post('/login', passport.authenticate('local',{failureRedirect:"/login"}),(req,res)=>{
-    res.send('you are log In now');
+    res.send('LogIn successful');
 });
 
 router.get('/logout',(req,res)=>{
