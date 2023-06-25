@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Ticket = require('../models/tambulatickets');
 const passport = require('passport');
+const fs= require('fs');
 
 
 //create tambula tickets
@@ -23,8 +24,10 @@ router.post('/tickets', async (req, res) => {
 });
 
 // Generate unique ticket numbers
-
+const numbers =random();
 function generateTicket() {
+	
+    
 	const tickets = [];
 	for(let j=0;j<6;++j){
 		const ticket = create();
@@ -33,16 +36,42 @@ function generateTicket() {
 	return tickets;
 }
 
+let itr=0;
+
+
+//generate random number array of size 90 
+function random(){
+
+
+	const numbers = Array.from({ length: 90 }, (_, i) => i + 1);
+	
+		// Shuffle the numbers randomly
+		for (let i = numbers.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[ numbers[i], numbers[j] ] = [ numbers[j], numbers[i] ];
+		}
+		return numbers;
+}
+
 function create(){
     const ticket = [];
     for(let i=0;i<3;++i){
+//create an array for selection of random index value;
+		const random_no = Array.from({ length: 9 }, (_, i) => i );
+
+	// Shuffle the numbers randomly
+    
+	for (let i = random_no.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * 8);
+		[ random_no[i], random_no[j] ] = [ random_no[j], random_no[i] ];
+	}
+
+
         const arr = new Array(9).fill(0);
         for(let i=0;i<5;++i){
         
-        const a = Math.floor(Math.random()*(90))+1;
-        
-        const j=Math.floor(Math.random()*(8));
-        arr[j] = a;
+			arr[random_no[i]] = numbers[itr];
+			itr=itr+1;
         }
     ticket.push(arr); 
     }
@@ -55,7 +84,8 @@ function create(){
 router.get('/tickets/tambula', async (req,res)=>{
     try {
         let foundtickets = await Ticket.find({});
-        res.send({ foundtickets });
+		let jsondata = JSON.stringify(foundtickets);
+        res.render('tambulatickets',{foundtickets, jsondata });
         
     } catch (error) {
         console.error(error);
