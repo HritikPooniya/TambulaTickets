@@ -6,9 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <% for(let tickets of foundtickets){ %>
-        <h4> <%= tickets._id %></h4>
-        <h3><%=jsondata%></h3>
+    <h2>Generated tickets ID </h2>
+    <h5> Please click to view the tickets</h5>
+    <% for(let tickets of foundtickets) {%>
+        <li><a href="/tickets/<%= tickets._id %>"><%= tickets._id %></a></li> 
 
     <%}%>
 </body>

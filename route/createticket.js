@@ -6,6 +6,7 @@ const passport = require('passport');
 const fs= require('fs');
 
 
+
 //create tambula tickets
 router.post('/tickets', async (req, res) => {
 	try {
@@ -24,37 +25,14 @@ router.post('/tickets', async (req, res) => {
 });
 
 // Generate unique ticket numbers
-const numbers =random();
+
 function generateTicket() {
-	
+	const numbers =random();
+	let itr=0;
     
 	const tickets = [];
 	for(let j=0;j<6;++j){
-		const ticket = create();
-		tickets.push(ticket);
-	}
-	return tickets;
-}
-
-let itr=0;
-
-
-//generate random number array of size 90 
-function random(){
-
-
-	const numbers = Array.from({ length: 90 }, (_, i) => i + 1);
-	
-		// Shuffle the numbers randomly
-		for (let i = numbers.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[ numbers[i], numbers[j] ] = [ numbers[j], numbers[i] ];
-		}
-		return numbers;
-}
-
-function create(){
-    const ticket = [];
+		const ticket = [];
     for(let i=0;i<3;++i){
 //create an array for selection of random index value;
 		const random_no = Array.from({ length: 9 }, (_, i) => i );
@@ -75,17 +53,55 @@ function create(){
         }
     ticket.push(arr); 
     }
-    return ticket;  
+		tickets.push(ticket);
+	}
+	return tickets;
 }
+
+
+
+
+//generate random number array of size 90 
+function random(){
+
+
+	const numbers = Array.from({ length: 90 }, (_, i) => i + 1);
+	
+		// Shuffle the numbers randomly
+		for (let i = numbers.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[ numbers[i], numbers[j] ] = [ numbers[j], numbers[i] ];
+		}
+		return numbers;
+}
+
+
 
 
 // Fetch all Tambula tickets
 
 router.get('/tickets/tambula', async (req,res)=>{
     try {
+		
         let foundtickets = await Ticket.find({});
-		let jsondata = JSON.stringify(foundtickets);
-        res.render('tambulatickets',{foundtickets, jsondata });
+		// const objdata = JSON.stringify(foundtickets);
+		// res.json({foundtickets});
+        res.render('tambulatickets',{foundtickets});
+        
+    } catch (error) {
+        console.error(error);
+		res.status(500).json({ error: 'Failed to fetch ticket' });
+        
+    }
+})
+
+router.get('/tickets/tambula/all', async (req,res)=>{
+    try {
+		
+        let foundtickets = await Ticket.find({});
+		
+		res.json({foundtickets});
+        
         
     } catch (error) {
         console.error(error);
@@ -95,11 +111,13 @@ router.get('/tickets/tambula', async (req,res)=>{
 })
 
 
+
 //fetch ticket by ubique id
 
 router.get('/tickets/:id', async (req, res) => {
 	try {
 		const { id } = req.params;
+		
 
 		// Fetch the ticket from the database
 		const ticket = await Ticket.findById(id);

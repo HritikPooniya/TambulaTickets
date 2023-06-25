@@ -1,0 +1,14 @@
+<nav aria-label="..." class="my-4">
+    <ul class="pagination">
+      <li class="page-item <%=  foundtickets.hasPrevPage ? '' :  'disabled' %>">
+        <a class="page-link" href="/tickets?page=<%= foundtickets.prevPage%>">Previous</a>
+      </li>
+      <li class="page-item active" aria-current="page">
+        <a class="page-link" href="/tickets?page=1">1</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item <%= foundtickets.hasNextPage ? '' :  'disabled' %>">
+        <a class="page-link" href="/tickets?page=<%= foundtickets.nextPage%">Next</a>
+      </li>
+    </ul>
+  </nav>
