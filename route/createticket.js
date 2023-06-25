@@ -10,9 +10,6 @@ router.post('/tickets', async (req, res) => {
 	try {
 
 		const ticketNumber = generateTicket();
-   
-
-
 		//database work
 		const ticket = new Ticket({ ticketNumbers: ticketNumber });
         console.log(ticket);
@@ -28,42 +25,30 @@ router.post('/tickets', async (req, res) => {
 // Generate unique ticket numbers
 
 function generateTicket() {
-	const createdticket = [];
-
-	
-	const numbers = Array.from({ length: 90 }, (_, i) => i + 1);
-  
-	
-	for (let i = numbers.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[ numbers[i], numbers[j] ] = [ numbers[j], numbers[i] ];
+	const tickets = [];
+	for(let j=0;j<6;++j){
+		const ticket = create();
+		tickets.push(ticket);
 	}
- 
-
-	
-	for (let i = 0; i < 6; i++) {
-		const ticket_col = [];
-
-		// Add numbers to each row
-		for (let j = 0; j < 3; j++) {
-			const col = numbers.splice(0, 5);
-      
-			ticket_col.push(col);
-		}
-
-		// Add zeros or 'x' to fill the blank cells
-		for (let j = 0; j < 3; j++) {
-			const missingCount = 9 - ticket_col[j].length;
-			if (missingCount > 0) {
-				ticket_col[j] = ticket_col[j].concat(Array.from({ length: missingCount }, () => 0));
-			}
-		}
-
-		createdticket.push(ticket_col);
-	}
-
-	return createdticket;
+	return tickets;
 }
+
+function create(){
+    const ticket = [];
+    for(let i=0;i<3;++i){
+        const arr = new Array(9).fill(0);
+        for(let i=0;i<5;++i){
+        
+        const a = Math.floor(Math.random()*(90))+1;
+        
+        const j=Math.floor(Math.random()*(8));
+        arr[j] = a;
+        }
+    ticket.push(arr); 
+    }
+    return ticket;  
+}
+
 
 // Fetch all Tambula tickets
 
