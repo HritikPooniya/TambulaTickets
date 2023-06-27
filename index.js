@@ -5,6 +5,7 @@ const express = require('express'),
     passport =require('passport'),
     localStrategy = require('passport-local'),
     User = require('./models/user-db'),
+    
     PORT = 3000 || process.env.PORT;
 
 mongoose.connect("mongodb+srv://backapi:backapi@cluster0.0hpaxoo.mongodb.net/").then(()=>{
@@ -41,10 +42,12 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:true}));
 
 const user = require('./route/auth');
-const createticket = require('./route/createticket');
+const createticket = require('./route/tambulatickets.js');
+// const ticket = require('./route/tambuls');
 
 app.use(user);
 app.use(createticket);
+// app.use(ticket);
 
 app.get('/',(req,res)=>{
     res.render('home');

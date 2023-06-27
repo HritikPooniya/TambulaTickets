@@ -27,13 +27,19 @@ router.get('/login', (req,res) => {
 });
 
 router.post('/login', passport.authenticate('local',{failureRedirect:"/login"}),(req,res)=>{
-    res.send('LogIn successful');
+    res.render('logout');
 });
 
 router.get('/logout',(req,res)=>{
-    req.logout();
+    req.logOut(function(err){
+        if(err){
+            console.log('error while logout');
+        }
+    
     res.redirect('/login');
 });
+});
+
 
 
 
