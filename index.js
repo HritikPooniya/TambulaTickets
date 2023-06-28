@@ -42,7 +42,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:true}));
 
 const user = require('./route/auth');
-const createticket = require('./route/tambulatickets.js');
+const createticket = require('./route/tambula.js');
 // const ticket = require('./route/tambuls');
 
 app.use(user);
