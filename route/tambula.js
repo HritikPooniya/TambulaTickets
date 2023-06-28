@@ -30,8 +30,14 @@ router.post('/tambula', async (req, res) => {
 function generatetambulatickets(){
     const tickets = [];
     function createticket(){
-        var ticketNumber = tambola.generateTicket();
-        return ticketNumber;
+		const ticket =[];
+		for(var  i=0;i<3;++i){
+			var ticketNumber = tambola.generateTicket();
+			ticket.push(ticketNumber);
+
+		}
+        
+        return ticket;
     
     }
     for(let i=0;i<6;i++){
