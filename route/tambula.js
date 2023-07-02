@@ -15,8 +15,8 @@ router.post('/tambula', async (req, res) => {
 
         // const ticketNumber = generatetambulatickets();
 		const ticketNumber =generatetambulatickets();
-        console.log("tickets");
-        console.log(ticketNumber);
+        // console.log("tickets");
+        // console.log(ticketNumber);
 		const ticket = new Ticket({ ticketNumbers: ticketNumber });
         
 		await ticket.save();
