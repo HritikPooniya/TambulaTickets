@@ -14,7 +14,7 @@ router.post('/tambula', async (req, res) => {
 	try {
 
         // const ticketNumber = generatetambulatickets();
-		const ticketNumber =generatetambulatickets();
+		const ticketNumber =generateTickets();
         // console.log("tickets");
         // console.log(ticketNumber);
 		const ticket = new Ticket({ ticketNumbers: ticketNumber });
@@ -29,7 +29,7 @@ router.post('/tambula', async (req, res) => {
 });
 
 // Generate unique ticket numbers
-function generateTickets(){
+const generateTickets = ()=>{
 
 
 
@@ -297,10 +297,7 @@ function generateTickets(){
 	
 }
 
-const generatetambulatickets = ()=>{
-	return generateTickets();
-	
-}
+
 
 
 
